@@ -1,0 +1,104 @@
+{
+  "name": "Date",
+  "type": "object",
+  "properties": {
+    "profile_a_id": {
+      "type": "string",
+      "description": "Id of the first profile (Agent A) in the date"
+    },
+    "profile_b_id": {
+      "type": "string",
+      "description": "Id of the second profile (Agent B) in the date"
+    },
+    "scenario": {
+      "type": "string",
+      "description": "Generated first-date scenario the agents play out"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "in_progress",
+        "completed"
+      ],
+      "default": "in_progress",
+      "description": "Whether the 8-turn date has finished"
+    },
+    "turns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "speaker": {
+            "type": "string",
+            "enum": [
+              "a",
+              "b"
+            ]
+          },
+          "content": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "speaker",
+          "content"
+        ]
+      },
+      "description": "Ordered transcript of the date, one entry per spoken turn"
+    },
+    "verdict": {
+      "type": "object",
+      "properties": {
+        "scores": {
+          "type": "object",
+          "properties": {
+            "interests": {
+              "type": "number"
+            },
+            "lifestyle": {
+              "type": "number"
+            },
+            "communication": {
+              "type": "number"
+            },
+            "values": {
+              "type": "number"
+            },
+            "chemistry": {
+              "type": "number"
+            }
+          },
+          "description": "0-100 scores per compatibility dimension"
+        },
+        "overall": {
+          "type": "number",
+          "description": "Average of the five dimension scores"
+        },
+        "strengths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Points where the two connect well"
+        },
+        "friction": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Points where the two may clash or mismatch"
+        },
+        "explanation": {
+          "type": "string",
+          "description": "Short summary of the verdict"
+        }
+      },
+      "description": "Saved compatibility verdict produced by the judge"
+    }
+  },
+  "required": [
+    "profile_a_id",
+    "profile_b_id",
+    "scenario"
+  ]
+}

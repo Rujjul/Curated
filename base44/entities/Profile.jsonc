@@ -1,0 +1,78 @@
+{
+  "name": "Profile",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The person's display name, inferred from their sources"
+    },
+    "linkedin_url": {
+      "type": "string",
+      "description": "Public LinkedIn profile URL used for curation"
+    },
+    "instagram_url": {
+      "type": "string",
+      "description": "Public Instagram profile URL used for curation"
+    },
+    "summary": {
+      "type": "string",
+      "description": "A short narrative summary of who the person is"
+    },
+    "needs": {
+      "type": "string",
+      "description": "What the person is looking for in a partner or relationship"
+    },
+    "hobbies": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Recurring hobbies observed across the sources"
+    },
+    "interests": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Broader interests and topics the person engages with"
+    },
+    "lifestyle": {
+      "type": "string",
+      "description": "Description of the person's day-to-day lifestyle"
+    },
+    "communication_style": {
+      "type": "string",
+      "description": "How the person tends to communicate and express themselves"
+    },
+    "values": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Core values inferred from the sources"
+    },
+    "traits": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Personality traits inferred from the sources"
+    },
+    "confidence": {
+      "type": "number",
+      "description": "0-100 confidence score in the curated profile given source richness"
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Specific observations from the sources that support the profile"
+    }
+  },
+  "required": [
+    "linkedin_url",
+    "instagram_url",
+    "summary"
+  ]
+}

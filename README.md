@@ -1,63 +1,83 @@
-# Base44 Project
+# Curated
 
-Use this repository to run and edit the app locally, then publish changes back through Base44.
+**Live demo:** [curated-match-ai.base44.app](https://curated-match-ai.base44.app/)
 
-Any change pushed to the repo will also be reflected in the Base44 Builder.
+Curated is an AI-powered dating compatibility app. It creates dating profiles from a person's public LinkedIn and Instagram sources, then lets you simulate a first date between two profiles and review their compatibility verdict, including shared interests, values, lifestyle, and potential friction.
 
-## Prerequisites
+## Explore the repository
 
-1. Clone the repository using the project's Git URL.
-2. Navigate to the project directory.
-3. Install dependencies: `npm install`.
-4. Install the Base44 CLI: `npm install -g base44@latest`.
-5. Install [Deno](https://docs.deno.com/runtime/getting_started/installation/) — the local Base44 backend runs on it.
+- `src/pages/` — application screens, including the home, login, registration, and date arena pages.
+- `src/components/` — shared UI and date-flow components.
+- `src/api/base44Client.js` — the Base44 SDK client used by the frontend.
+- `src/lib/` — shared app configuration, authentication, and routing helpers.
+- `base44/entities/` — data schemas for profiles, dates, and users.
+- `base44/functions/` — backend functions for profile analysis, chat, and date simulation and judging.
+- `base44/config.jsonc` — Base44 site commands and build configuration.
+- `vite.config.js` — Vite and Base44 plugin setup.
 
-Run `base44 --help` (or see the [CLI reference](https://docs.base44.com/developers/references/cli/commands/introduction)) for the full command surface.
+## Edit and run locally
 
-## Run Locally
+### Prerequisites
 
-Three commands, from the project root:
+- Node.js and npm
+- [Deno](https://docs.deno.com/runtime/getting_started/installation/) (required by the local Base44 backend)
+- A Base44 account with access to this app
+
+### Setup
+
+From the repository root, install dependencies and authenticate with Base44:
 
 ```bash
-base44 login   # one-time per machine
-base44 link    # one-time per clone
-base44 dev     # local backend + frontend together
+npm install
+npm install -g base44@latest
+base44 login
 ```
 
-Open the frontend URL that `base44 dev` prints (typically `http://localhost:5173`).
+Link this clone to the deployed app. The app ID is `6ac20e22f28cc9a188274983`:
 
-Notes:
+```bash
+base44 link --app-id 6ac20e22f28cc9a188274983
+```
 
-- **Every fresh clone needs `base44 link`.** It writes `base44/.app.jsonc` (the app-id pointer), which is deliberately gitignored. Your app id is in the Builder URL (`app.base44.com/apps/<id>/...`); `base44 link --help` shows the non-interactive flags.
-- **`base44 dev` runs the frontend for you** (via `site.serveCommand` in this repo's `base44/config.jsonc`) — never run `npm run dev` yourself: alone it serves a UI with no backend behind it (`[base44] Proxy not enabled`, every `/api` call fails), and alongside `base44 dev` the second Vite silently takes the next port and you end up looking at the wrong one.
-- **The app must be published at least once for the UI to load under `base44 dev`.** The frontend boots by fetching app settings from the hosted app; before the first publish that fails and every page redirects to login. The local API works regardless.
-- Entities, functions, and auth run locally — entity data is **in-memory only**, wiped when `base44 dev` restarts. Everything else (Core integrations, OAuth login) is forwarded to your deployed app. Full breakdown: [Local development overview](https://docs.base44.com/developers/backend/overview/local-dev/local-development-overview).
+The link is stored in the ignored local file `base44/.app.jsonc`; each fresh clone needs its own link. Start the local backend and frontend together:
 
-## Frontend Only, Hosted Backend
+```bash
+base44 dev
+```
 
-To work on just the frontend against your app's live hosted backend:
+Open the frontend URL printed by the command (usually <http://localhost:5173>). Keep the terminal running while you use the app. Do not start `npm run dev` alongside `base44 dev`; that starts a separate frontend without the local backend proxy.
+
+In this mode, Base44 entities, functions, and authentication run locally. Entity data is in memory and is cleared when the local backend restarts. Core integrations and OAuth login are forwarded to the deployed app. The app must have been published at least once for its frontend settings to load in local development.
+
+To work on the frontend against the hosted backend instead, run:
 
 ```bash
 base44 dev --remote
 ```
 
-⚠️ In this mode writes go to your app's **production data** — plain `base44 dev` keeps everything local.
+In remote mode, writes use the deployed app's production data.
 
-## Publish Your Changes
+## Build and checks
 
-After pushing your changes to git, open the Base44 dashboard and publish the app:
+```bash
+npm run build
+npm run lint
+npm run typecheck
+```
+
+## Publish changes
+
+After pushing changes to the repository, open the Base44 dashboard to review and publish the app:
 
 ```bash
 base44 dashboard open
 ```
 
-This repo syncs to Base44 through git, so publish from the dashboard rather than `base44 deploy` — a CLI deploy ships your local tree directly, bypassing the sync, and the deployed state silently diverges from the repo.
+This repository syncs with Base44 through Git. Publish from the dashboard so the deployed app stays in sync with the repository.
 
-## Docs & Support
+## Documentation
 
-GitHub integration: [https://docs.base44.com/developers/app-code/local-development/github](https://docs.base44.com/developers/app-code/local-development/github)
-
-Local development: [https://docs.base44.com/developers/backend/overview/local-dev/local-development-overview](https://docs.base44.com/developers/backend/overview/local-dev/local-development-overview)
-
-Support: [https://app.base44.com/support](https://app.base44.com/support)
-# Curated
+- [Base44 CLI reference](https://docs.base44.com/developers/references/cli/commands/introduction)
+- [Base44 local development](https://docs.base44.com/developers/backend/overview/local-dev/local-development-overview)
+- [Base44 GitHub integration](https://docs.base44.com/developers/app-code/local-development/github)
+- [Base44 support](https://app.base44.com/support)
